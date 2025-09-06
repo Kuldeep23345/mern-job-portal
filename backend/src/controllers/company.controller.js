@@ -28,7 +28,7 @@ const registerCompany = asyncHandler(async (req, res) => {
 const getCompany = asyncHandler(async (req, res) => {
   const userId = req.user?._id;
   const companies = await Company.find({ userId });
-  console.log(companies);
+ 
   if (!companies) {
     throw new ApiError(404, "Companies not found");
   }
@@ -39,7 +39,7 @@ const getCompany = asyncHandler(async (req, res) => {
 
 const getCompanyById = asyncHandler(async (req, res) => {
   const company = await Company.findById(req.params.id);
-  console.log(company);
+
   if (!company) {
     throw new ApiError(404, "Companies not found");
   }
