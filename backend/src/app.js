@@ -18,8 +18,10 @@ app.use(cookieParser());
 import userRoutes from "./routes/user.route.js";
 import companyRoutes from "./routes/company.route.js";
 import JobRoutes from "./routes/job.route.js"
+import applicationRoutes from "./routes/application.route.js"
 app.use("/api/v1/users", userRoutes);
 app.use("/api/v1/company", companyRoutes);
 app.use("/api/v1/job", JobRoutes);
+app.use("/api/v1/application", applicationRoutes);
 
 export { app };
