@@ -4,7 +4,7 @@ import { ApiResponse } from "../utils/ApiResponse.js";
 import { User } from "../models/user.model.js";
 
 const userRegister = asyncHandler(async (req, res) => {
-  const { fullName, email, password, phoneNumber, role, profile } = req.body;
+  const { fullName, email, password, phoneNumber, role } = req.body;
 
   if (!fullName || !email || !password || !phoneNumber || !role) {
     throw new ApiError(400, "All fields are required");
@@ -23,7 +23,6 @@ const userRegister = asyncHandler(async (req, res) => {
     password,
     phoneNumber,
     role,
-    profile,
   });
 
   return res
@@ -32,8 +31,8 @@ const userRegister = asyncHandler(async (req, res) => {
 });
 
 const userLogin = asyncHandler(async (req, res) => {
-  const { email, password } = req.body;
-  if (!email || !password) {
+  const { email, password, role } = req.body;
+  if (!email || !password || !role) {
     throw new ApiError(400, "All fields are required");
   }
   const user = await User.findOne({ email });
@@ -42,10 +41,14 @@ const userLogin = asyncHandler(async (req, res) => {
     throw new ApiError(400, "Invalid credentials");
   }
   const isPasswordCorrect = await user.isPasswordCorrect(password);
- 
+
   if (!isPasswordCorrect) {
     throw new ApiError(400, "Invalid credentials");
   }
+  if (role !== user.role) {
+    throw new ApiError(400, "Account doesn't exist with current role");
+  }
+
   const options = {
     httpOnly: true,
     secure: true,
@@ -68,4 +71,39 @@ const userLogout = asyncHandler(async (_, res) => {
     .status(200)
     .json(new ApiResponse(200, {}, "Logout Successfully"));
 });
-export { userRegister, userLogin, userLogout };
+
+const userUpdateProfile = asyncHandler(async (req, res) => {
+  const { fullName, email, phoneNumber, bio, skills } = req.body;
+
+  let user = await User.findById(req.user?._id);
+  if (!user) {
+    throw new ApiError(400, "User not found");
+  }
+  // updating data
+  if (fullName) {
+    user.fullName = fullName;
+  }
+  if (email) {
+    user.email = email;
+  }
+  if (phoneNumber) {
+    user.phoneNumber = phoneNumber;
+  }
+  if (bio) {
+    user.profile.bio = bio;
+  }
+  if (skills) {
+    const skillsArray = Array.from(skills);
+
+    user.profile.skills = skillsArray;
+  }
+  await user.save();
+
+  const updatedUser = await User.findById(req.user._id);
+  console.log(updatedUser);
+
+  return res
+    .status(200)
+    .json(new ApiResponse(200, updatedUser, "Profile updated successfully"));
+});
+export { userRegister, userLogin, userLogout, userUpdateProfile };
