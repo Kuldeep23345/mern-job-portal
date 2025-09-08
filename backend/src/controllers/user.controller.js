@@ -6,6 +6,9 @@ import { User } from "../models/user.model.js";
 const userRegister = asyncHandler(async (req, res) => {
   const { fullName, email, password, phoneNumber, role } = req.body;
 
+  console.log( fullName, email, password, phoneNumber, role)
+
+  console.log(phoneNumber)
   if (!fullName || !email || !password || !phoneNumber || !role) {
     throw new ApiError(400, "All fields are required");
   }

@@ -8,7 +8,7 @@ import {
 import { Link } from "react-router-dom";
 
 const Navbar = () => {
-  const user = true;
+  const user = false;
   return (
     <nav className="flex items-center justify-between max-w-7xl w-full  mx-auto px-10 py-5">
       {/* logo */}
@@ -34,15 +34,19 @@ const Navbar = () => {
 
         {!user ? (
           <div className="flex flex-row gap-2">
-            <Button variant="outline" className="cursor-pointer py-5">
-              Login
-            </Button>
-            <Button
-              variant="outline"
-              className="bg-[#6A38C2] hover:bg-[#5719c3] hover:text-white text-white cursor-pointer py-5 "
-            >
-              Signup
-            </Button>
+            <Link to={"/login"}>
+              <Button variant="outline" className="cursor-pointer py-5">
+                Login
+              </Button>
+            </Link>
+            <Link to={"/signup"}>
+              <Button
+                variant="outline"
+                className="bg-[#6A38C2] hover:bg-[#5719c3] hover:text-white text-white cursor-pointer py-5 "
+              >
+                Signup
+              </Button>
+            </Link>
           </div>
         ) : (
           <Popover>
