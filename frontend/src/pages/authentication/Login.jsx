@@ -7,11 +7,16 @@ import { Link, useNavigate } from "react-router-dom";
 import { USER_API_ENDPOINT } from "@/utils/constant";
 import axios from "axios";
 import { toast } from "sonner";
-
-
+import { useDispatch, useSelector } from "react-redux";
+import { setLoading } from "@/redux/authSlice";
+import { Button } from "@/components/ui/button";
+import { Loader2 } from "lucide-react";
 
 const Login = () => {
+  const loading = useSelector((store) => store.auth?.loading || false);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  
   const [inputVal, setInputVal] = useState({
     email: "",
     password: "",
@@ -34,9 +39,10 @@ const Login = () => {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(inputVal)
+    console.log(inputVal);
 
     try {
+      dispatch(setLoading(true));
       const res = await axios.post(`${USER_API_ENDPOINT}/login`, inputVal, {
         headers: {
           "Content-Type": "application/json",
@@ -48,12 +54,15 @@ const Login = () => {
         toast.success(res.data.message);
       }
     } catch (error) {
-      console.log(error)
+      toast.error(error.response?.data?.message || "Login failed");
+      console.log(error);
+    } finally {
+      dispatch(setLoading(false));
     }
   };
 
   return (
-    <section className="h-screen w-full flex items-center justify-center">
+    <section className="h-[calc(100vh-80px)] w-full flex items-center justify-center">
       <form
         className="bg-white text-gray-500 max-w-[460px] w-full mx-4 md:p-6 p-4 py-8 text-left text-sm rounded-lg shadow-[0px_0px_10px_0px] shadow-black/10"
         onSubmit={handleSubmit}
@@ -103,13 +112,20 @@ const Login = () => {
             </div>
           </RadioGroup>
         </div>
+        {loading ? (
+          <Button className={"w-full "}>
+            {" "}
+            <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Please Wait{" "}
+          </Button>
+        ) : (
+          <button
+            type="submit"
+            className="w-full mb-3 bg-indigo-500 hover:bg-indigo-600 transition-all active:scale-95 py-2.5 rounded text-white font-medium"
+          >
+            Login
+          </button>
+        )}
 
-        <button
-          type="submit"
-          className="w-full mb-3 bg-indigo-500 hover:bg-indigo-600 transition-all active:scale-95 py-2.5 rounded text-white font-medium"
-        >
-          Login
-        </button>
         <p className="text-center flex items-center justify-center gap-2">
           Don't have an Account
           <Link to={"/signup"} className="text-blue-500 underline">
