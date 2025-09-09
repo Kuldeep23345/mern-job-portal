@@ -8,7 +8,7 @@ import { USER_API_ENDPOINT } from "@/utils/constant";
 import axios from "axios";
 import { toast } from "sonner";
 import { useDispatch, useSelector } from "react-redux";
-import { setLoading } from "@/redux/authSlice";
+import { setLoading,setUser } from "@/redux/authSlice";
 import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
 
@@ -18,8 +18,8 @@ const Login = () => {
   const dispatch = useDispatch();
   
   const [inputVal, setInputVal] = useState({
-    email: "",
-    password: "",
+    email: "alpha@gmail.com",
+    password: "1234",
     role: "student",
   });
 
@@ -50,6 +50,8 @@ const Login = () => {
         withCredentials: true,
       });
       if (res.data.success) {
+        dispatch(setUser(res.data.data))
+        
         navigate("/");
         toast.success(res.data.message);
       }

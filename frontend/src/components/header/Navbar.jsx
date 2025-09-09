@@ -5,12 +5,13 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 const Navbar = () => {
-  const user = false;
+  const { user } = useSelector((store) => store.auth);
   return (
-    <nav className="flex items-center justify-between max-w-7xl w-full  mx-auto px-10 py-5">
+    <nav className="flex items-center justify-between max-w-7xl w-full  mx-auto  py-5">
       {/* logo */}
       <div className="font-medium text-2xl">
         Job <span className="text-red-500 font-semibold">Portal</span>
@@ -68,7 +69,9 @@ const Navbar = () => {
                 </div>
               </div>
               <div className="flex items-center  gap-8">
+                <Link to={"/profile"}>
                 <Button variant="link">View profile</Button>
+                </Link>
                 <Button variant="link">Logout</Button>
               </div>
             </PopoverContent>
