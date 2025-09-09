@@ -24,8 +24,14 @@ const userRegister = asyncHandler(async (req, res) => {
     password,
     phoneNumber,
     role,
-    profile: profilePath,
   });
+  user.profile = {
+    ...user.profile,
+    profilePhoto: profilePath,
+  };
+  await user.save();
+
+  console.log(user);
 
   return res
     .status(200)
@@ -34,6 +40,7 @@ const userRegister = asyncHandler(async (req, res) => {
 
 const userLogin = asyncHandler(async (req, res) => {
   const { email, password, role } = req.body;
+  
   if (!email || !password || !role) {
     throw new ApiError(400, "All fields are required");
   }
@@ -68,6 +75,7 @@ const userLogout = asyncHandler(async (_, res) => {
     httpOnly: true,
     secure: true,
   };
+
   return res
     .clearCookie("token", options)
     .status(200)

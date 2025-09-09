@@ -13,6 +13,8 @@ const router = Router();
 router.route("/register").post(upload.single("profile"), userRegister);
 router.route("/login").post(userLogin);
 router.route("/logout").post(verifyJWT, userLogout);
-router.route("/profile-update").post(verifyJWT, userUpdateProfile);
+router
+  .route("/profile-update")
+  .post(verifyJWT, upload.single("resume"), userUpdateProfile);
 
-export default router
+export default router;

@@ -18,8 +18,8 @@ const Login = () => {
   const dispatch = useDispatch();
   
   const [inputVal, setInputVal] = useState({
-    email: "alpha@gmail.com",
-    password: "1234",
+    email: "kiya@gmail.comsd",
+    password: "kunal123",
     role: "student",
   });
 
