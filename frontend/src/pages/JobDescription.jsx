@@ -1,22 +1,51 @@
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import React from "react";
+
+import { setSingleJob } from "@/redux/jobSlice";
+import { JOB_API_ENDPOINT } from "@/utils/constant";
+import axios from "axios";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 
 const JobDescription = () => {
   const isApplied = true;
+  const params = useParams()
+  const dispatch = useDispatch()
+  const jobId = params.id
+  const {singleJob} = useSelector(store=>store.job)
+  const {user}=useSelector(store=>store.auth)
+
+
+useEffect(() => {
+    const fetchSingleJob = async () => {
+      try {
+        const res = await axios.get(`${JOB_API_ENDPOINT}/get/${jobId}`, {
+          withCredentials: true,
+        });
+        console.log(res.data.data)
+        if (res.data.success) {
+            dispatch(setSingleJob(res.data.data));
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchSingleJob();
+  }, [jobId,dispatch,user?._id]);
   return (
     <div className="max-w-7xl mx-auto my-10">
-      <h1 className="font-bold text-xl">Frontend Developer</h1>
+      <h1 className="font-bold text-xl">{singleJob?.title}</h1>
       <div className="flex flex-row items-center justify-between">
         <div className="flex items-center gap-2 mt-4">
           <Badge className={"text-blue-700 font-bold"} variant={"ghost"}>
-            12 Positions
+            {singleJob?.position}Positions
           </Badge>
           <Badge className={"text-[#F83002] font-bold"} variant={"ghost"}>
-            Part Time
+        {singleJob?.jobType}
           </Badge>
           <Badge className={"text-[#7209b7] font-bold"} variant={"ghost"}>
-            24LPA
+            {singleJob?.salary}LPA
           </Badge>
         </div>
         <Button
@@ -42,29 +71,28 @@ const JobDescription = () => {
         </h1>
         <h1 className="font-bold my-1">
           Location:
-          <span className="pl-4 font-normal text-gray-800">Hyderabad</span>
+          <span className="pl-4 font-normal text-gray-800">{singleJob?.location}</span>
         </h1>
         <h1 className="font-bold my-1">
           Description:
           <span className="pl-4 font-normal text-gray-800">
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-            Consectetur, veritatis!
+           {singleJob?.description}
           </span>
         </h1>
         <h1 className="font-bold my-1">
           Experience:
-          <span className="pl-4 font-normal text-gray-800">2 yrs</span>
+          <span className="pl-4 font-normal text-gray-800">{singleJob?.experienceLevel} yrs</span>
         </h1>
         <h1 className="font-bold my-1">
-          Salary:<span className="pl-4 font-normal text-gray-800">12LPA</span>
+          Salary:<span className="pl-4 font-normal text-gray-800">{singleJob?.salary}LPA</span>
         </h1>
         <h1 className="font-bold my-1">
           Total Applicants:
-          <span className="pl-4 font-normal text-gray-800">4</span>
+          <span className="pl-4 font-normal text-gray-800">{singleJob?.applications.length}</span>
         </h1>
         <h1 className="font-bold my-1">
           Posted Date:
-          <span className="pl-4 font-normal text-gray-800">17-07-2025</span>
+          <span className="pl-4 font-normal text-gray-800">{singleJob?.createdAt.split("T")[0]}</span>
         </h1>
       </div>
     </div>
