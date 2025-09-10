@@ -2,10 +2,12 @@ import { asyncHandler } from "../utils/asyncHandler.js";
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { User } from "../models/user.model.js";
+import { uploadOnCloudinary } from "../utils/cloudinary.js";
 
 const userRegister = asyncHandler(async (req, res) => {
   const { fullName, email, password, phoneNumber, role } = req.body;
   const profilePath = req.file ? req.file.path : null;
+  const cloudinaryUrl = await uploadOnCloudinary(profilePath);
 
   if (!fullName || !email || !password || !phoneNumber || !role) {
     throw new ApiError(400, "All fields are required");
@@ -27,11 +29,11 @@ const userRegister = asyncHandler(async (req, res) => {
   });
   user.profile = {
     ...user.profile,
-    profilePhoto: profilePath,
+    profilePhoto: cloudinaryUrl.secure_url,
   };
   await user.save();
 
-  console.log(user);
+  // console.log(user);
 
   return res
     .status(200)
@@ -40,7 +42,7 @@ const userRegister = asyncHandler(async (req, res) => {
 
 const userLogin = asyncHandler(async (req, res) => {
   const { email, password, role } = req.body;
-  
+
   if (!email || !password || !role) {
     throw new ApiError(400, "All fields are required");
   }
@@ -83,11 +85,29 @@ const userLogout = asyncHandler(async (_, res) => {
 });
 
 const userUpdateProfile = asyncHandler(async (req, res) => {
-  const { fullName, email, phoneNumber, bio, skills } = req.body;
+  // const resumeLocalPath = req.file ? req.file.path || null
+  const { fullName, email, phoneNumber, bio, skills, resume } = req.body;
 
   let user = await User.findById(req.user?._id);
+
   if (!user) {
     throw new ApiError(400, "User not found");
+  }
+
+  let profilePath = null;
+  console.log(req.file)
+  if (req.file) {
+    profilePath = req.file.path;
+    const cloudinaryUrl = await uploadOnCloudinary(profilePath);
+    if (!cloudinaryUrl || !cloudinaryUrl.secure_url) {
+      throw new ApiError(500, "File upload failed");
+    }
+    user.profile.resume = cloudinaryUrl.secure_url;
+    user.profile.resumeOriginalName=req.file.originalname
+    console.log(req.file.originalName)
+  }
+  if (skills) {
+    user.profile.skills = skills.split(",");
   }
   // updating data
   if (fullName) {
@@ -102,15 +122,10 @@ const userUpdateProfile = asyncHandler(async (req, res) => {
   if (bio) {
     user.profile.bio = bio;
   }
-  if (skills) {
-    const skillsArray = Array.from(skills);
 
-    user.profile.skills = skillsArray;
-  }
   await user.save();
 
   const updatedUser = await User.findById(req.user._id);
-  console.log(updatedUser);
 
   return res
     .status(200)

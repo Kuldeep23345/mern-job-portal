@@ -59,7 +59,7 @@ const Signup = () => {
     }
   };
   return (
-    <section className="h-screen w-full flex items-center justify-center">
+    <section className="h-[80vh] w-full flex items-center justify-center">
       <form
         className="bg-white text-gray-500 max-w-[460px] w-full mx-4 md:p-6 p-4 py-8 text-left text-sm rounded-lg shadow-[0px_0px_10px_0px] shadow-black/10"
         onSubmit={handleSubmit}

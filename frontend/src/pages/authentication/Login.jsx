@@ -39,7 +39,7 @@ const Login = () => {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(inputVal);
+   
 
     try {
       dispatch(setLoading(true));
@@ -57,14 +57,14 @@ const Login = () => {
       }
     } catch (error) {
       toast.error(error.response?.data?.message || "Login failed");
-      console.log(error);
+     
     } finally {
       dispatch(setLoading(false));
     }
   };
 
   return (
-    <section className="h-[calc(100vh-80px)] w-full flex items-center justify-center">
+    <section className="h-[80vh] w-full flex items-center justify-center">
       <form
         className="bg-white text-gray-500 max-w-[460px] w-full mx-4 md:p-6 p-4 py-8 text-left text-sm rounded-lg shadow-[0px_0px_10px_0px] shadow-black/10"
         onSubmit={handleSubmit}

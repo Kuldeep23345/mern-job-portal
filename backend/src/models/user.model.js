@@ -28,10 +28,10 @@ const userSchema = new Schema(
       required: true,
     },
     profile: {
-      bio: { type: String },
-      skills: [{ type: String }],
-      resume: { type: String },
-      resumeOriginalName: { type: String },
+      bio: { type: String , default:"" },
+      skills: [{ type: String ,default:""}],
+      resume: { type: String,default:"" },
+      resumeOriginalName: { type: String, default:"" },
       company: { type: Schema.Types.ObjectId, ref: "Company" },
       profilePhoto:{
         type:String,
