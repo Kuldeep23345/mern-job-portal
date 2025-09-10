@@ -55,7 +55,7 @@ const Signup = () => {
         toast.success(res.data.message);
       }
     } catch (error) {
-      toast.error(error);
+      toast.error(error?.response?.data?.message || "signup faild");
     }
   };
   return (

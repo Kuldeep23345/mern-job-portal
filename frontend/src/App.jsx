@@ -8,6 +8,8 @@ import Browse from "./pages/Browse";
 import Profile from "./pages/Profile";
 import JobDescription from "./pages/JobDescription";
 
+
+
 const App = () => {
   return (
     <>

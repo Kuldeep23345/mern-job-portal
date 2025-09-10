@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
+import { notFound, errorHandler } from "./middlewares/error.middleware.js";
 
 const app = express();
 
@@ -12,6 +13,7 @@ app.use(
     credentials: true,
   })
 );
+app.use(express.static("public"))
 app.use(cookieParser());
 
 // Routes
@@ -23,5 +25,9 @@ app.use("/api/v1/users", userRoutes);
 app.use("/api/v1/company", companyRoutes);
 app.use("/api/v1/job", JobRoutes);
 app.use("/api/v1/application", applicationRoutes);
+
+// Error handling middleware (MUST be last)
+app.use(notFound);
+app.use(errorHandler);
 
 export { app };
