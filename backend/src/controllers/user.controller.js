@@ -26,12 +26,15 @@ const userRegister = asyncHandler(async (req, res) => {
     password,
     phoneNumber,
     role,
+    profile:{
+      profilePhoto:cloudinaryUrl.secure_url
+    }
   });
-  user.profile = {
-    ...user.profile,
-    profilePhoto: cloudinaryUrl.secure_url,
-  };
-  await user.save();
+  // user.profile = {
+  //   ...user.profile,
+  //   profilePhoto: cloudinaryUrl.secure_url,
+  // };
+  // await user.save();
 
   // console.log(user);
 

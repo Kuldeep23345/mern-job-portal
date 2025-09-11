@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { setSingleJob } from "@/redux/jobSlice";
 import { APPLICATION_API_ENDPOINT, JOB_API_ENDPOINT } from "@/utils/constant";
 import axios from "axios";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { toast } from "sonner";
@@ -15,35 +15,39 @@ const JobDescription = () => {
   const jobId = params.id;
   const { singleJob } = useSelector((store) => store.job);
   const { user } = useSelector((store) => store.auth);
-  const isApplied =
+  const isIntiallyApplied =
     singleJob?.applications?.some(
       (application) => application.applicant == user?._id
     ) || false;
 
- const applyJobHandler = async () => {
-  try {
-    const res = await axios.get(
-      `${APPLICATION_API_ENDPOINT}/apply/${jobId}`,
-      {
-        withCredentials: true,
-        headers: {
-          "Content-Type": "application/json",
-        },
+  const [isApplied, setIsApplied] = useState(isIntiallyApplied);
+
+  const applyJobHandler = async () => {
+    try {
+      const res = await axios.get(
+        `${APPLICATION_API_ENDPOINT}/apply/${jobId}`,
+        {
+          withCredentials: true,
+        }
+      );
+
+      console.log(res.data);
+
+      if (res.data.success) {
+        setIsApplied(true);
+        const updateSingleJob = {
+          ...singleJob,
+          applications: [...singleJob.applications, { applicant: user?._id }],
+        };
+        dispatch(setSingleJob(updateSingleJob));
+        toast.success(res.data.message);
       }
-    );
-
-    console.log(res.data);
-
-    if (res.data.success) {
-      toast.success(res.data.message);
+    } catch (error) {
+      console.log(error);
+      // Safer error handling:
+      toast.error(error?.response?.data?.message || "Something went wrong");
     }
-  } catch (error) {
-    console.log(error);
-    // Safer error handling:
-    toast.error(error?.response?.data?.message || "Something went wrong");
-  }
-};
-
+  };
 
   useEffect(() => {
     const fetchSingleJob = async () => {
@@ -54,6 +58,11 @@ const JobDescription = () => {
         console.log(res.data.data);
         if (res.data.success) {
           dispatch(setSingleJob(res.data.data));
+          setIsApplied(
+            res.data.data.applications.some(
+              (application) => application.applicant === user?._id
+            )
+          );
         }
       } catch (error) {
         console.log(error);

@@ -7,6 +7,9 @@ import Jobs from "./pages/Jobs";
 import Browse from "./pages/Browse";
 import Profile from "./pages/Profile";
 import JobDescription from "./pages/JobDescription";
+import Companies from "./pages/admin/Companies";
+import CreateCompany from "./pages/admin/CreateCompany";
+
 
 
 
@@ -23,6 +26,8 @@ const App = () => {
           <Route path="/browse" element={<Browse />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/description/:id" element={<JobDescription />} />
+          <Route path="/admin/companies" element={<Companies />} />
+          <Route path="/admin/companies/create" element={<CreateCompany />} />
         </Routes>
       </BrowserRouter>
     </>

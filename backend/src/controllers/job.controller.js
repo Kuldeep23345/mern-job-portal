@@ -68,7 +68,9 @@ const getAllJobs = asyncHandler(async (req, res) => {
 });
 
 const getJobById = asyncHandler(async (req, res) => {
-  const job = await Job.findById(req.params.id);
+  const job = await Job.findById(req.params.id).populate({
+    path:'applications'
+  })
   if (!job) {
     throw new ApiError(404, "Job not found");
   }

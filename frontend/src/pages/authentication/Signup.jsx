@@ -6,16 +6,19 @@ import { LuUser } from "react-icons/lu";
 import { FiPhoneCall } from "react-icons/fi";
 import { Link, useNavigate } from "react-router-dom";
 import { CgProfile } from "react-icons/cg";
-import axios, { AxiosHeaders } from "axios";
+import axios from "axios";
 import { USER_API_ENDPOINT } from "@/utils/constant";
 import { toast } from "sonner";
 import { useDispatch, useSelector } from "react-redux";
 
+import { Button } from "@/components/ui/button";
+import { Loader2 } from "lucide-react";
+
 const Signup = () => {
   const navigate = useNavigate();
   const loading = useSelector((store) => store.auth?.loading || false);
-
   const dispatch = useDispatch();
+
   const [input, setInput] = useState({
     fullName: "",
     email: "",
@@ -24,21 +27,26 @@ const Signup = () => {
     role: "student",
     profile: null,
   });
+
   const inputHandler = (e) => {
     const { value, name } = e.target;
     setInput((prev) => ({ ...prev, [name]: value }));
   };
+
   const fileHandler = (e) => {
-    setInput((prev) => ({ ...prev, file: e.target.files?.[0] }));
+    setInput((prev) => ({ ...prev, profile: e.target.files?.[0] }));
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     const formData = new FormData();
     formData.append("fullName", input.fullName);
     formData.append("email", input.email);
     formData.append("phoneNumber", input.phoneNumber);
     formData.append("password", input.password);
     formData.append("role", input.role);
+
     if (input.profile) {
       formData.append("profile", input.profile);
     }
@@ -55,9 +63,10 @@ const Signup = () => {
         toast.success(res.data.message);
       }
     } catch (error) {
-      toast.error(error?.response?.data?.message || "signup faild");
+      toast.error(error?.response?.data?.message || "Signup failed");
     }
   };
+
   return (
     <section className="h-[80vh] w-full flex items-center justify-center">
       <form
@@ -68,14 +77,14 @@ const Signup = () => {
           Sign Up
         </h2>
 
-        {/* fullName */}
+        {/* Full Name */}
         <div className="flex items-center my-2 border bg-indigo-500/5 border-gray-500/10 rounded gap-1 pl-2">
           <LuUser size="20" />
           <input
             name="fullName"
             className="w-full outline-none bg-transparent py-2.5"
             type="text"
-            placeholder="fullName"
+            placeholder="Full Name"
             required
             value={input.fullName}
             onChange={inputHandler}
@@ -103,7 +112,7 @@ const Signup = () => {
             name="phoneNumber"
             className="w-full outline-none bg-transparent py-2.5"
             type="text"
-            placeholder="Phonenumber"
+            placeholder="Phone number"
             required
             value={input.phoneNumber}
             onChange={inputHandler}
@@ -147,7 +156,7 @@ const Signup = () => {
         {/* File input */}
         <div className="flex items-center mt-2 mb-8 border bg-indigo-500/5 border-gray-500/10 rounded gap-3 pl-2">
           <label
-            htmlFor="file"
+            htmlFor="profile"
             className="flex items-center justify-center gap-0.5"
           >
             <CgProfile size={"20"} />
@@ -159,15 +168,14 @@ const Signup = () => {
             className="w-full outline-none bg-transparent py-2.5"
             type="file"
             accept="image/*"
-            // required
             onChange={fileHandler}
           />
         </div>
 
+        {/* Submit Button */}
         {loading ? (
-          <Button className={"w-full "}>
-            {" "}
-            <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Please Wait{" "}
+          <Button className={"w-full"}>
+            <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Please Wait
           </Button>
         ) : (
           <button
@@ -178,6 +186,7 @@ const Signup = () => {
           </button>
         )}
 
+        {/* Redirect to Login */}
         <p className="text-center flex items-center justify-center gap-2">
           Already have an account?{" "}
           <Link to={"/login"} className="text-blue-500 underline">

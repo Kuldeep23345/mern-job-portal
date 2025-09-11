@@ -30,7 +30,7 @@ const Navbar = () => {
       }
     } catch (error) {
       console.error(error);
-     toast.error(error.response?.data?.message || "Logout failed");
+      toast.error(error.response?.data?.message || "Logout failed");
     }
   };
 
@@ -43,16 +43,27 @@ const Navbar = () => {
       {/* links */}
       <div className="flex items-center justify-center gap-5 ">
         <ul className="flex items-center gap-5">
-          {["/Home", "/Jobs", "/Browse"].map((link, index) => (
-            <li key={index}>
-              <Link
-                className="text-base font-medium"
-                to={link.toLowerCase().replace("/home", "/")}
-              >
-                {link.replace("/", "")}
+          {user && user.role == "recruiter" ? (
+            <li className="flex items-center gap-5">
+              <Link className="text-base font-medium" to={"/admin/companies"}>
+                Companies
+              </Link>
+              <Link className="text-base font-medium" to={"/admin/jobs"}>
+                Jobs
               </Link>
             </li>
-          ))}
+          ) : (
+            ["/Home", "/Jobs", "/Browse"].map((link, index) => (
+              <li key={index}>
+                <Link
+                  className="text-base font-medium"
+                  to={link.toLowerCase().replace("/home", "/")}
+                >
+                  {link.replace("/", "")}
+                </Link>
+              </li>
+            ))
+          )}
         </ul>
 
         {/* avatar */}
@@ -93,9 +104,11 @@ const Navbar = () => {
                 </div>
               </div>
               <div className="flex items-center  gap-8">
-                <Link to={"/profile"}>
-                  <Button variant="link">View profile</Button>
-                </Link>
+                {user && user.role == "student" && (
+                  <Link to={"/profile"}>
+                    <Button variant="link">View profile</Button>
+                  </Link>
+                )}
                 <Button onClick={logoutHandle} variant="link">
                   Logout
                 </Button>
