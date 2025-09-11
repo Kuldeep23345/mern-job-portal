@@ -55,15 +55,23 @@ const getCompanyById = asyncHandler(async (req, res) => {
 
 const updateCompany = asyncHandler(async (req, res) => {
   const { name, description, website, location } = req.body;
-  // Remove undefined fields from updateData
-  const fileLocalpath = req.file ? req.file.path : null;
-  const cloudinaryUrl = await uploadOnCloudinary(fileLocalpath);
+
+  let logoUrl = null;
+
+  // Upload file to cloudinary if exists
+  if (req.file) {
+    const fileLocalPath = req.file.path;
+    const cloudinaryResult = await uploadOnCloudinary(fileLocalPath);
+    logoUrl = cloudinaryResult?.secure_url;
+  }
+
+  // Build updateData object with only provided fields
   const updateData = {};
-  if (name !== undefined) updateData.name = name;
-  if (description !== undefined) updateData.description = description;
-  if (website !== undefined) updateData.website = website;
-  if (location !== undefined) updateData.location = location;
-  if (req.file) updateData.logo = cloudinaryUrl.secure_url;
+  if (name) updateData.name = name;
+  if (description) updateData.description = description;
+  if (website) updateData.website = website;
+  if (location) updateData.location = location;
+  if (logoUrl) updateData.logo = logoUrl;
 
   const company = await Company.findByIdAndUpdate(
     req.params.id,
@@ -75,10 +83,15 @@ const updateCompany = asyncHandler(async (req, res) => {
   );
 
   if (!company) {
-    throw new ApiError(404, "company not found");
+    throw new ApiError(404, "Company not found");
   }
+ 
+
   return res
     .status(200)
-    .json(new ApiResponse(200, { company }, "company updated successfully"));
+    .json(
+      new ApiResponse(200, { company }, "Company updated successfully")
+    );
 });
+
 export { registerCompany, getCompany, getCompanyById, updateCompany };

@@ -1,17 +1,24 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import useGetCompanyById from "@/hooks/useGetCompanyById";
+import { setSingleCompany } from "@/redux/companySlice";
+
 import { COMPANY_API_ENDPOINT } from "@/utils/constant";
 import axios from "axios";
 import { ArrowLeft, Loader2 } from "lucide-react"; // ✅ fixed import
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "sonner";
 
 const CompanySetup = () => {
+  const dispatch = useDispatch();
   const params = useParams();
   const navigate = useNavigate();
+  const { singleCompany } = useSelector((store) => store.company);
   const [loading, setLoading] = useState(false);
+
   const [input, setInput] = useState({
     name: "",
     description: "",
@@ -55,15 +62,28 @@ const CompanySetup = () => {
 
       if (res.data.success) {
         toast.success(res?.data?.message);
+        dispatch(setSingleCompany(res?.data?.data));
         navigate("/admin/companies");
       }
     } catch (error) {
       toast.error(error?.response?.data?.message || "Company setup failed");
       console.log(error);
     } finally {
-      setLoading(false); 
+      setLoading(false);
     }
   };
+
+  
+useGetCompanyById(params.id)
+  useEffect(() => {
+    setInput({
+      name: singleCompany?.name || "",
+      description: singleCompany?.description || "",
+      website: singleCompany?.website || "",
+      location: singleCompany?.location || "",
+      file: null,
+    });
+  }, [singleCompany]);
 
   return (
     <section className="max-w-xl mx-auto my-10">
