@@ -9,48 +9,67 @@ import {
   TableRow,
 } from "../ui/table";
 import { Avatar, AvatarImage } from "../ui/avatar";
-import { Button } from "../ui/button";
-import { Popover } from "../ui/popover";
-import { PopoverContent, PopoverTrigger } from "@radix-ui/react-popover";
+import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { Edit2, MoreHorizontal } from "lucide-react";
 
-const ComapaniesTable = () => {
+const CompaniesTable = () => {
+  // Example data (replace with your API/props)
+  const companies = [
+    {
+      id: 1,
+      name: "Company Name",
+      logo: "https://img.freepik.com/free-vector/abstract-company-logo_53876-120501.jpg?semt=ais_hybrid&w=740&q=80",
+      date: "9/9/2025",
+    },
+    {
+      id: 2,
+      name: "Another Company",
+      logo: "https://img.freepik.com/premium-vector/business-company-logo-template_61778-3.jpg",
+      date: "9/10/2025",
+    },
+  ];
+
   return (
     <div>
       <Table>
-        <TableCaption> A list of your recent registerd companies </TableCaption>
+        <TableCaption>A list of your recent registered companies</TableCaption>
         <TableHeader>
           <TableRow>
             <TableHead>Logo</TableHead>
             <TableHead>Name</TableHead>
             <TableHead>Date</TableHead>
-            <TableHead className={"text-right"}>Action</TableHead>
+            <TableHead className="text-right">Action</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
-          <TableCell>
-            <Avatar>
-              <AvatarImage src="https://img.freepik.com/free-vector/abstract-company-logo_53876-120501.jpg?semt=ais_hybrid&w=740&q=80" />
-            </Avatar>
-          </TableCell>
-          <TableCell>Company Name</TableCell>
-          <TableCell>9/9/2025</TableCell>
-          <TableCell className={'text-right cursor-pointer'}>
-            <Popover>
-                <PopoverTrigger><MoreHorizontal/></PopoverTrigger>
-                <PopoverContent className="w-32">
+          {companies.map((company) => (
+            <TableRow key={company.id}>
+              <TableCell>
+                <Avatar>
+                  <AvatarImage src={company.logo} alt={company.name} />
+                </Avatar>
+              </TableCell>
+              <TableCell>{company.name}</TableCell>
+              <TableCell>{company.date}</TableCell>
+              <TableCell className="text-right cursor-pointer">
+                <Popover>
+                  <PopoverTrigger>
+                    <MoreHorizontal />
+                  </PopoverTrigger>
+                  <PopoverContent className="w-32">
                     <div className="flex items-center gap-2 w-fit cursor-pointer">
-                        <Edit2 className="w-4"/>
-                        <span>Edit</span>
+                      <Edit2 className="w-4" />
+                      <span>Edit</span>
                     </div>
-
-                </PopoverContent>
-            </Popover>
-          </TableCell>
+                  </PopoverContent>
+                </Popover>
+              </TableCell>
+            </TableRow>
+          ))}
         </TableBody>
       </Table>
     </div>
   );
 };
 
-export default ComapaniesTable;
+export default CompaniesTable;

@@ -2,6 +2,7 @@ import { Company } from "../models/company.model.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
+import { uploadOnCloudinary } from "../utils/cloudinary.js";
 
 const registerCompany = asyncHandler(async (req, res) => {
   const { companyName } = req.body;
@@ -22,13 +23,15 @@ const registerCompany = asyncHandler(async (req, res) => {
 
   return res
     .status(200)
-    .json(new ApiResponse(200, createCompany, "Company created successfully"));
+    .json(
+      new ApiResponse(200, { createCompany }, "Company registerd successfully")
+    );
 });
 
 const getCompany = asyncHandler(async (req, res) => {
   const userId = req.user?._id;
   const companies = await Company.find({ userId });
- 
+
   if (!companies) {
     throw new ApiError(404, "Companies not found");
   }
@@ -45,17 +48,22 @@ const getCompanyById = asyncHandler(async (req, res) => {
   }
   return res
     .status(200)
-    .json(new ApiResponse(200, company, "company by id fetched successfully"));
+    .json(
+      new ApiResponse(200, { company }, "company by id fetched successfully")
+    );
 });
 
 const updateCompany = asyncHandler(async (req, res) => {
   const { name, description, website, location } = req.body;
   // Remove undefined fields from updateData
+  const fileLocalpath = req.file ? req.file.path : null;
+  const cloudinaryUrl = await uploadOnCloudinary(fileLocalpath);
   const updateData = {};
   if (name !== undefined) updateData.name = name;
   if (description !== undefined) updateData.description = description;
   if (website !== undefined) updateData.website = website;
   if (location !== undefined) updateData.location = location;
+  if (req.file) updateData.logo = cloudinaryUrl.secure_url;
 
   const company = await Company.findByIdAndUpdate(
     req.params.id,
@@ -71,6 +79,6 @@ const updateCompany = asyncHandler(async (req, res) => {
   }
   return res
     .status(200)
-    .json(new ApiResponse(200, company, "company updated successfully"));
+    .json(new ApiResponse(200, { company }, "company updated successfully"));
 });
 export { registerCompany, getCompany, getCompanyById, updateCompany };
