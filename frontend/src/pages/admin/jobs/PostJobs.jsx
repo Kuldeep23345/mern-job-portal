@@ -8,8 +8,13 @@ import {
   SelectValue,
   SelectContent,
 } from "@/components/ui/select";
+import { JOB_API_ENDPOINT } from "@/utils/constant";
+import axios from "axios";
+import { Loader2 } from "lucide-react";
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 
 const PostJobs = () => {
   const { companies } = useSelector((store) => store.company);
@@ -26,21 +31,48 @@ const PostJobs = () => {
     companyId: "",
   });
 
+  // Common input handler
   const changeEventHandler = (e) => {
     const { name, value } = e.target;
     setInput((prevInput) => ({ ...prevInput, [name]: value }));
   };
 
+  // ✅ Fix: Select uses onValueChange, not e.target.value
   const handleCompanyChange = (value) => {
     const selectedCompany = companies.find(
-      (company) => company.name.toLowerCase() === value
+      (company) => company?.name?.toLowerCase() === value.toLowerCase()
     );
-    setInput((prevInput) => ({ ...prevInput, companyId: selectedCompany._id }));
+    console.log(selectedCompany);
+    if (selectedCompany) {
+      setInput((prevInput) => ({
+        ...prevInput,
+        companyId: selectedCompany._id,
+      }));
+    }
   };
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Job Posted:", input);
+    try {
+      setLoading(true);
+      const res = await axios.post(`${JOB_API_ENDPOINT}/post`, input, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        withCredentials: true,
+      });
+      if (res.data.success) {
+        toast.success(res?.data?.message);
+        navigate("/admin/jobs");
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error(error.response?.data?.message || "Job post faild");
+    }finally{
+      setLoading(false)
+    }
   };
 
   return (
@@ -151,14 +183,11 @@ const PostJobs = () => {
           {companies.length > 0 ? (
             <Select onValueChange={handleCompanyChange}>
               <SelectTrigger>
-                <SelectValue
-                  placeholder="Select a Company"
-                  className="text-left"
-                />
+                <SelectValue placeholder="Select a Company" />
               </SelectTrigger>
               <SelectContent>
                 {companies.map((company) => (
-                  <SelectItem key={company._id} value={company._id}>
+                  <SelectItem key={company._id} value={company.name}>
                     {company.name}
                   </SelectItem>
                 ))}
@@ -173,9 +202,15 @@ const PostJobs = () => {
 
         {/* Submit Button */}
         <div className="col-span-2">
-          <Button type="submit" className="w-full py-2">
-            Post New Job
+           {loading ? (
+          <Button className="w-full mt-3" disabled>
+            <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Please Wait
           </Button>
+        ) : (
+          <Button type="submit" className="w-full mt-3 cursor-pointer py-5">
+            Save
+          </Button>
+        )}
         </div>
       </form>
     </section>

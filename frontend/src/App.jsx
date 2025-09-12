@@ -12,6 +12,7 @@ import CreateCompany from "./pages/admin/CreateCompany";
 import CompanySetup from "./pages/admin/CompanySetup";
 import AdminJobs from "./pages/admin/jobs/AdminJobs";
 import PostJobs from "./pages/admin/jobs/PostJobs";
+import Applicants from "./pages/admin/Applicants";
 
 
 
@@ -34,6 +35,7 @@ const App = () => {
           <Route path="/admin/companies/:id" element={<CompanySetup />} />
           <Route path="/admin/jobs" element={<AdminJobs />} />
           <Route path="/admin/jobs/create" element={<PostJobs />} />
+          <Route path="/admin/jobs/:id/applicants" element={<Applicants />} />
         </Routes>
       </BrowserRouter>
     </>

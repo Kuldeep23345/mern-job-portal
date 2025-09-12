@@ -82,7 +82,7 @@ const getJobById = asyncHandler(async (req, res) => {
 const getAdminJobs = asyncHandler(async (req, res) => {
   const adminId = req.user?._id;
 
-  const jobs = await Job.find({ created_by: adminId });
+  const jobs = await Job.find({ created_by: adminId }).populate("company", "name");
   if (!jobs) {
     throw new ApiError(404, "Jobs are not found");
   }
