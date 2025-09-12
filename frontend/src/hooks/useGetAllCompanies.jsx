@@ -15,7 +15,7 @@ const useGetAllCompanies = () => {
         });
 
         if (res.data.success) {
-          console.log(res.data);
+        
           dispatch(setCompanies(res.data.data));
         }
       } catch (error) {
