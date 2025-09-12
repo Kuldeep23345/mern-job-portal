@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import useGetAllCompanies from "@/hooks/useGetAllCompanies";
 import { setSingleCompany } from "@/redux/companySlice";
 import { COMPANY_API_ENDPOINT } from "@/utils/constant";
 import axios from "axios";
@@ -10,6 +11,7 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 
 const CreateCompany = () => {
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [companyName, setCompanyName] = useState();

@@ -13,8 +13,9 @@ import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "sonner";
 
 const CompanySetup = () => {
-  const dispatch = useDispatch();
   const params = useParams();
+  useGetCompanyById(params.id)
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const { singleCompany } = useSelector((store) => store.company);
   const [loading, setLoading] = useState(false);
@@ -74,7 +75,7 @@ const CompanySetup = () => {
   };
 
   
-useGetCompanyById(params.id)
+// useGetCompanyById(params.id)
   useEffect(() => {
     setInput({
       name: singleCompany?.name || "",
