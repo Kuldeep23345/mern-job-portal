@@ -58,7 +58,7 @@ const getAllJobs = asyncHandler(async (req, res) => {
 
   const jobs = await Job.find(query)
     .populate({ path: "company" })
-    .sort({ createAt: -1 });
+    .sort({ createdAt: -1 });
   if (!jobs) {
     throw new ApiError(404, "Jobs not found");
   }
