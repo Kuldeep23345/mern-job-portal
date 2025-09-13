@@ -13,9 +13,7 @@ import CompanySetup from "./pages/admin/CompanySetup";
 import AdminJobs from "./pages/admin/jobs/AdminJobs";
 import PostJobs from "./pages/admin/jobs/PostJobs";
 import Applicants from "./pages/admin/Applicants";
-
-
-
+import ProtectedRoute from "./pages/admin/ProtectedRoute";
 
 const App = () => {
   return (
@@ -30,12 +28,56 @@ const App = () => {
           <Route path="/browse" element={<Browse />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/description/:id" element={<JobDescription />} />
-          <Route path="/admin/companies" element={<Companies />} />
-          <Route path="/admin/companies/create" element={<CreateCompany />} />
-          <Route path="/admin/companies/:id" element={<CompanySetup />} />
-          <Route path="/admin/jobs" element={<AdminJobs />} />
-          <Route path="/admin/jobs/create" element={<PostJobs />} />
-          <Route path="/admin/jobs/:id/applicants" element={<Applicants />} />
+          <Route
+            path="/admin/companies"
+            element={
+              <ProtectedRoute>
+                <Companies />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/admin/companies/create"
+            element={
+              <ProtectedRoute>
+                <CreateCompany />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/admin/companies/:id"
+            element={
+              <ProtectedRoute>
+                <CompanySetup />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/admin/jobs"
+            element={
+              <ProtectedRoute>
+                <AdminJobs />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/admin/jobs/create"
+            element={
+              <ProtectedRoute>
+                {" "}
+                <PostJobs />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/admin/jobs/:id/applicants"
+            element={
+              <ProtectedRoute>
+                {" "}
+                <Applicants />
+              </ProtectedRoute>
+            }
+          />
         </Routes>
       </BrowserRouter>
     </>

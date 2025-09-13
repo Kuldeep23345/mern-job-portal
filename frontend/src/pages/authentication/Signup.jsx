@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { MdOutlineEmail } from "react-icons/md";
@@ -16,7 +16,7 @@ import { Loader2 } from "lucide-react";
 
 const Signup = () => {
   const navigate = useNavigate();
-  const loading = useSelector((store) => store.auth?.loading || false);
+  const {loading,user} = useSelector((store) => store.auth);
   const dispatch = useDispatch();
 
   const [input, setInput] = useState({
@@ -66,7 +66,11 @@ const Signup = () => {
       toast.error(error?.response?.data?.message || "Signup failed");
     }
   };
-
+useEffect(()=>{
+  if(user){
+    navigate('/')
+  }
+},[])
   return (
     <section className="h-[80vh] w-full flex items-center justify-center">
       <form

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
@@ -14,6 +14,7 @@ import { Loader2 } from "lucide-react";
 
 const Login = () => {
   const loading = useSelector((store) => store.auth?.loading || false);
+  const {user} = useSelector(store=>store.auth)
   const navigate = useNavigate();
   const dispatch = useDispatch();
   
@@ -62,7 +63,11 @@ const Login = () => {
       dispatch(setLoading(false));
     }
   };
-
+useEffect(()=>{
+  if(user){
+    navigate('/')
+  }
+},[])
   return (
     <section className="h-[80vh] w-full flex items-center justify-center">
       <form
