@@ -8,6 +8,9 @@ import {
 import { setUser } from "@/redux/authSlice";
 import { USER_API_ENDPOINT } from "@/utils/constant";
 import axios from "axios";
+import { LogOut, Menu } from "lucide-react";
+import { useState } from "react";
+import { CgClose, CgProfile } from "react-icons/cg";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
@@ -16,6 +19,12 @@ const Navbar = () => {
   const { user } = useSelector((store) => store.auth);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const [hamBurger, setHamBurger] = useState(false);
+
+  const hamBurgerHandler = () => {
+    setHamBurger((prev) => setHamBurger(!prev));
+  };
 
   const logoutHandle = async () => {
     try {
@@ -35,14 +44,14 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="flex items-center justify-between max-w-7xl w-full  mx-auto  py-5">
+    <nav className="flex items-center justify-between max-w-7xl w-full px-10 md:px-10 lg:px-0   mx-auto  py-5 relative">
       {/* logo */}
-      <div className="font-medium text-2xl">
+      <div className="font-medium text-xl md:text-2xl relative">
         Job <span className="text-red-500 font-semibold">Portal</span>
       </div>
       {/* links */}
-      <div className="flex items-center justify-center gap-5 ">
-        <ul className="flex items-center gap-5">
+      <div className="flex items-center justify-center gap-5  ">
+        <ul className="md:flex items-center gap-5 hidden">
           {user && user.role == "recruiter" ? (
             <li className="flex items-center gap-5">
               <Link className="text-base font-medium" to={"/admin/companies"}>
@@ -87,17 +96,23 @@ const Navbar = () => {
         ) : (
           <Popover>
             <PopoverTrigger>
-              <Avatar className="cursor-pointer w-10 h-10">
-                <AvatarImage src={user?.profile?.profilePhoto} />
+              <Avatar className="cursor-pointer w-10 h-10 ">
+                <AvatarImage
+                  className={"object-cover"}
+                  src={user?.profile?.profilePhoto}
+                />
               </Avatar>
             </PopoverTrigger>
             <PopoverContent className="max-w-72 mr-5 md:mr-0">
               <div className="flex items-center gap-2 -mt-6">
-                <Avatar className="cursor-pointer">
-                  <AvatarImage src={user?.profile?.profilePhoto} />
+                <Avatar className="cursor-pointer size-12">
+                  <AvatarImage
+                    className={"object-cover "}
+                    src={user?.profile?.profilePhoto}
+                  />
                 </Avatar>
                 <div className="ml-2 mt-8">
-                  <h2 className="font-medium text-sm">{user?.fullName}</h2>
+                  <h2 className="font-sans text-base ">{user?.fullName}</h2>
                   <h4 className="font-normal text-sm text-gray-400">
                     {user?.profile?.bio}
                   </h4>
@@ -106,16 +121,39 @@ const Navbar = () => {
               <div className="flex items-center  gap-8">
                 {user && user.role == "student" && (
                   <Link to={"/profile"}>
-                    <Button variant="link">View profile</Button>
+                    <Button variant="link">
+                      <CgProfile /> View profile
+                    </Button>
                   </Link>
                 )}
                 <Button onClick={logoutHandle} variant="link">
-                  Logout
+                  <LogOut /> Logout
                 </Button>
               </div>
             </PopoverContent>
-            {/* <h2 className="-ml-3"></h2> */}
           </Popover>
+        )}
+        <Menu className=" md:hidden" onClick={hamBurgerHandler} />
+        {hamBurger && (
+          <div className="h-screen w-[70%] z-20 bg-white fixed left-0 top-0 bottom-0">
+            {/* <CgClose
+              onClick={hamBurgerHandler}
+              className="w-20 absolute right-0 top-5"
+            /> */}
+            <div className="flex items-center justify-between px-6 mt-16">
+
+ <div className="font-medium text-xl md:text-2xl relative">
+        Job <span className="text-red-500 font-semibold">Portal</span>
+      </div>
+  <Avatar className="cursor-pointer w-10 h-10 ">
+                <AvatarImage
+                  className={"object-cover"}
+                  src={user?.profile?.profilePhoto}
+                />
+              </Avatar>
+            </div>
+          
+          </div>
         )}
       </div>
     </nav>

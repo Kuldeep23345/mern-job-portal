@@ -71,9 +71,9 @@ const JobDescription = () => {
     fetchSingleJob();
   }, [jobId, dispatch, user?._id]);
   return (
-    <div className="max-w-7xl mx-auto my-10">
+    <div className="max-w-7xl mx-auto my-10  md:px-0 px-10">
       <h1 className="font-bold text-xl">{singleJob?.title}</h1>
-      <div className="flex flex-row items-center justify-between">
+      <div className="flex md:flex-row flex-col items-start justify-between gap-3 ">
         <div className="flex items-center gap-2 mt-4">
           <Badge className={"text-blue-700 font-bold"} variant={"ghost"}>
             {singleJob?.position}Positions
@@ -85,10 +85,13 @@ const JobDescription = () => {
             {singleJob?.salary}LPA
           </Badge>
         </div>
+        
+
+        
         <Button
           onClick={isApplied ? null : applyJobHandler}
           disabled={isApplied}
-          className={`rounded-lg${
+          className={`rounded-lg  ${
             isApplied
               ? "bg-gray-600 cursor-not-allowed"
               : " cursor-pointer bg-[#7209b7] hover:bg-[#5c0993]"
@@ -97,6 +100,9 @@ const JobDescription = () => {
           {isApplied ? "Already Applied" : "Apply Now"}
         </Button>
       </div>
+     
+
+      
       <h1 className="border-b-2 border-b-gray-300 font-medium py-4">
         Job Description
       </h1>

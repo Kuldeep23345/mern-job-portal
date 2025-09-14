@@ -19,7 +19,7 @@ const filterData = [
   },
 ];
 
-const FilterCard = () => {
+const FilterCard = ({hamBurgerHandler}) => {
   const dispatch = useDispatch()
   const [selectedValue, setSelectedValue] = useState("");
 
@@ -32,11 +32,11 @@ const FilterCard = () => {
   }, [selectedValue]);
 
   return (
-    <div className="w-full bg-white p-3 rounded-md">
-      <h1 className="text-lg font-bold">Filter Jobs</h1>
-      <hr className="mt-3" />
+    <div  className="w-full bg-white p-3 rounded-md ">
+      <h1 className="text-lg font-bold -ml-12 md:-ml-0">Filter Jobs</h1>
+      <hr className="md:mt-3 -ml-20 md:-ml-0" />
 
-      <RadioGroup value={selectedValue} onValueChange={changeHandler}>
+      <RadioGroup value={selectedValue} onValueChange={changeHandler} onClick={hamBurgerHandler}>
         {filterData.map((data, index) => (
           <div key={index} className="mt-3">
             <h1 className="font-bold text-lg">{data.filterType}</h1>
