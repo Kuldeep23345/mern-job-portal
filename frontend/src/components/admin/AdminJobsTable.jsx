@@ -28,12 +28,12 @@ const AdminJobsTable = () => {
   });
 
   return (
-    <div>
+    <div >
       <Table>
         <TableCaption>A list of your recent posted Jobs</TableCaption>
         <TableHeader>
-          <TableRow>
-            <TableHead>Company Name</TableHead>
+          <TableRow className='text-xs md:text-base'>
+            <TableHead >Company</TableHead>
             <TableHead>Role</TableHead>
             <TableHead>Date</TableHead>
             <TableHead className="text-right">Action</TableHead>
@@ -48,7 +48,7 @@ const AdminJobsTable = () => {
             </TableRow>
           ) : (
             filterJobs.map((job) => (
-              <TableRow key={job._id}>
+              <TableRow key={job._id} className={'text-xs md:text-base'}>
                 <TableCell>{job.company?.name || "N/A"}</TableCell>
                 <TableCell>{job.title}</TableCell>
                 <TableCell>

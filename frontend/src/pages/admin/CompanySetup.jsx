@@ -87,9 +87,9 @@ const CompanySetup = () => {
   }, [singleCompany]);
 
   return (
-    <section className="max-w-xl mx-auto my-10">
+    <section className="max-w-xl mx-auto my-10 px-10 md:px-0">
       <form onSubmit={submitHandler}>
-        <div className="flex items-center gap-5 p-8">
+        <div className="flex items-center justify-between w-full gap-5 md:p-8 md:mb-0 mb-5">
           <Button
             onClick={() => navigate("/admin/companies")}
             variant="outline"
@@ -98,10 +98,10 @@ const CompanySetup = () => {
             <ArrowLeft />
             <span>Back</span>
           </Button>
-          <h1 className="font-bold text-xl">Company Setup</h1>
+          <h1 className="font-bold text-sm md:text-xl">Company Setup</h1>
         </div>
 
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
             <Label>Company Name</Label>
             <Input

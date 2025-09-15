@@ -16,14 +16,14 @@ const Companies = () => {
     dispatch(setSearchCompanyByText(input));
   }, [input]);
   return (
-    <section className="max-w-6xl mx-auto my-10">
-      <div className="flex items-center justify-between my-10">
+    <section className="max-w-6xl mx-auto  md:my-10 px-10 md:px-0 ">
+      <div className="flex items-center justify-between my-10 ">
         <Input
-          className={"w-fit "}
+          className={"w-fit text-sm md:text-base "}
           placeholder="Filter by name"
           onChange={(e) => setInput(e.target.value)}
         />
-        <Button onClick={() => navigate("/admin/companies/create")}>
+        <Button onClick={() => navigate("/admin/companies/create")} className={"text-xs md:ml-0 ml-2  md:text-base"}>
           {" "}
           New Company
         </Button>

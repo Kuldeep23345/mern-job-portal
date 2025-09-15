@@ -47,11 +47,11 @@ setFilterCompany(filteredCompany)
   // ];
 
   return (
-    <div>
+    <div className="-mt-2 md:-mt-0 ">
       <Table>
         <TableCaption>A list of your recent registered com</TableCaption>
         <TableHeader>
-          <TableRow>
+          <TableRow className={'text-xs md:text-base'}>
             <TableHead>Logo</TableHead>
             <TableHead>Name</TableHead>
             <TableHead>Date</TableHead>
@@ -65,21 +65,21 @@ setFilterCompany(filteredCompany)
             filterCompany.map((company) => (
               <TableRow key={company._id}>
                 <TableCell>
-                  <Avatar>
+                  <Avatar className={'size-6 md:size-10'}>
                     <AvatarImage src={company.logo} alt={company.name} />
                   </Avatar>
                 </TableCell>
-                <TableCell>{company.name}</TableCell>
-                <TableCell>{company.createdAt.split("T")[0]}</TableCell>
+                <TableCell className={'text-xs md:text-base'}>{company.name}</TableCell>
+                <TableCell className={'text-xs md:text-base'} >{company.createdAt.split("T")[0]}</TableCell>
                 <TableCell className="text-right cursor-pointer">
                   <Popover>
                     <PopoverTrigger>
-                      <MoreHorizontal />
+                      <MoreHorizontal className="size-4 md:size-7" />
                     </PopoverTrigger>
-                    <PopoverContent className="w-32">
+                    <PopoverContent className="md:w-32 w-24 ">
                       <div onClick={()=>navigate(`/admin/companies/${company._id}`)} className="flex items-center gap-2 w-fit cursor-pointer">
                         <Edit2 className="w-4" />
-                        <span>Edit</span>
+                        <span className="text-xs md:text-base">Edit</span>
                       </div>
                     </PopoverContent>
                   </Popover>

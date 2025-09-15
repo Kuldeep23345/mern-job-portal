@@ -41,10 +41,10 @@ const CreateCompany = () => {
   };
 
   return (
-    <div className="max-w-4xl mx-auto">
-      <div className="my-10">
-        <h1 className="font-bold text-2xl">Your Company Name</h1>
-        <p className="text-gray-500">
+    <div className="max-w-4xl mx-auto px-10 md:px-0">
+      <div className="md:my-10 mt-10 mb-5">
+        <h1 className="font-bold text-lg md:text-2xl">Your Company Name</h1>
+        <p className="text-gray-500 text-sm md:text-base">
           {" "}
           What would you like to give your company name? you can change this
           later.
@@ -53,7 +53,7 @@ const CreateCompany = () => {
       <Label> Company Name</Label>
       <Input
         type={"text"}
-        className={"my-2"}
+        className={"my-2 md:text-base text-sm"}
         placeholder="Job Portal,Microsoft etc."
         onChange={(e) => setCompanyName(e.target.value)}
       />

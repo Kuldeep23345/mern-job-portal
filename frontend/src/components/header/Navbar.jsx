@@ -47,7 +47,9 @@ const Navbar = () => {
     <nav className="flex items-center justify-between max-w-7xl w-full px-10 md:px-10 lg:px-0   mx-auto  py-5 relative">
       {/* logo */}
       <div className="font-medium text-xl md:text-2xl relative">
-        Job <span className="text-red-500 font-semibold">Portal</span>
+        <Link to={"/"}>
+          Job <span className="text-red-500 font-semibold">Portal</span>
+        </Link>
       </div>
       {/* links */}
       <div className="flex items-center justify-center gap-5  ">
@@ -80,14 +82,17 @@ const Navbar = () => {
         {!user ? (
           <div className="flex flex-row gap-2">
             <Link to={"/login"}>
-              <Button variant="outline" className="cursor-pointer py-5">
+              <Button
+                variant="outline"
+                className="cursor-pointer text-xs md:text-base md:py-5"
+              >
                 Login
               </Button>
             </Link>
             <Link to={"/signup"}>
               <Button
                 variant="outline"
-                className="bg-[#6A38C2] hover:bg-[#5719c3] hover:text-white text-white cursor-pointer py-5 "
+                className="bg-[#6A38C2] hover:bg-[#5719c3] hover:text-white text-white cursor-pointer md:-mr-0 -mr-3  text-xs md:text-base md:py-5 "
               >
                 Signup
               </Button>
@@ -135,24 +140,68 @@ const Navbar = () => {
         )}
         <Menu className=" md:hidden" onClick={hamBurgerHandler} />
         {hamBurger && (
-          <div className="h-screen w-[70%] z-20 bg-white fixed left-0 top-0 bottom-0">
-            {/* <CgClose
+          <div onClick={hamBurgerHandler} className="h-screen w-[70%] z-20 bg-white fixed left-0 top-0 bottom-0">
+            <CgClose
               onClick={hamBurgerHandler}
               className="w-20 absolute right-0 top-5"
-            /> */}
-            <div className="flex items-center justify-between px-6 mt-16">
-
- <div className="font-medium text-xl md:text-2xl relative">
-        Job <span className="text-red-500 font-semibold">Portal</span>
-      </div>
-  <Avatar className="cursor-pointer w-10 h-10 ">
-                <AvatarImage
-                  className={"object-cover"}
-                  src={user?.profile?.profilePhoto}
-                />
-              </Avatar>
+            />
+            <div className="flex items-center justify-between px-6 mt-16 ">
+              <div className="font-medium text-xl md:text-2xl relative">
+                Job <span className="text-red-500 font-semibold">Portal</span>
+              </div>
+         <Avatar className="cursor-pointer size-10">
+                      <AvatarImage
+                        className={"object-cover "}
+                        src={user?.profile?.profilePhoto}
+                      />
+                    </Avatar>
             </div>
-          
+            <ul className="flex flex-col items-start gap-2 ml-6  ">
+              {user && user.role == "recruiter" ? (
+                <li className="flex md:flex-row flex-col items-start md:items-center gap-4 md:gap-8">
+                  <Link
+                    className="text-base font-medium"
+                    to={"/admin/companies"}
+                  >
+                    Companies
+                  </Link>
+                  <Link className="text-base font-medium" to={"/admin/jobs"}>
+                    Jobs
+                  </Link>
+                </li>
+              ) : (
+                ["/Home", "/Jobs", "/Browse"].map((link, index) => (
+                  <li key={index}>
+                    <Link
+                      className="text-base font-medium hover:border-b-2 hover:border-b-blue-600 cursor-pointer"
+                      to={link.toLowerCase().replace("/home", "/")}
+                    >
+                      {link.replace("/", "")}
+                    </Link>
+                  </li>
+                ))
+              )}
+            </ul>
+            {!user && (
+              <div className="flex flex-row gap-2 ml-5 mt-3">
+                <Link to={"/login"}>
+                  <Button
+                    variant="outline"
+                    className="cursor-pointer text-xs md:text-base md:py-5"
+                  >
+                    Login
+                  </Button>
+                </Link>
+                <Link to={"/signup"}>
+                  <Button
+                    variant="outline"
+                    className="bg-[#6A38C2] hover:bg-[#5719c3] hover:text-white text-white cursor-pointer md:-mr-0 -mr-3  text-xs md:text-base md:py-5 "
+                  >
+                    Signup
+                  </Button>
+                </Link>
+              </div>
+            )}
           </div>
         )}
       </div>

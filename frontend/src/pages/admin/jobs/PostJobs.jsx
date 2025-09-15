@@ -76,10 +76,10 @@ const PostJobs = () => {
   };
 
   return (
-    <section className="flex items-center justify-center w-full my-5">
+    <section className="flex items-center justify-center w-full my-5 px-10 md:px-0">
       <form
         onSubmit={handleSubmit}
-        className="grid grid-cols-2 gap-5 w-full max-w-4xl mt-10"
+        className="grid  md:grid-cols-2 gap-5 w-full max-w-4xl mt-10"
       >
         {/* Title */}
         <div className="flex flex-col gap-1">
@@ -90,6 +90,7 @@ const PostJobs = () => {
             name="title"
             onChange={changeEventHandler}
             placeholder="Enter job title"
+            className={'text-xs md:text-base'}
           />
         </div>
 
@@ -102,6 +103,7 @@ const PostJobs = () => {
             name="description"
             onChange={changeEventHandler}
             placeholder="Enter job description"
+            className={'text-xs md:text-base'}
           />
         </div>
 
@@ -114,6 +116,7 @@ const PostJobs = () => {
             name="requirements"
             onChange={changeEventHandler}
             placeholder="Enter job requirements"
+            className={'text-xs md:text-base'}
           />
         </div>
 
@@ -126,6 +129,7 @@ const PostJobs = () => {
             name="salary"
             onChange={changeEventHandler}
             placeholder="Enter salary (e.g. 6 LPA)"
+            className={'text-xs md:text-base'}
           />
         </div>
 
@@ -138,6 +142,7 @@ const PostJobs = () => {
             name="location"
             onChange={changeEventHandler}
             placeholder="Enter job location"
+            className={'text-xs md:text-base'}
           />
         </div>
 
@@ -150,6 +155,7 @@ const PostJobs = () => {
             name="jobType"
             onChange={changeEventHandler}
             placeholder="e.g. Full-time, Part-time, Internship"
+            className={'text-xs md:text-base'}
           />
         </div>
 
@@ -162,6 +168,7 @@ const PostJobs = () => {
             name="experience"
             onChange={changeEventHandler}
             placeholder="Enter experience required (e.g. 2 years)"
+            className={'text-xs md:text-base'}
           />
         </div>
 
@@ -173,6 +180,7 @@ const PostJobs = () => {
             value={input.position}
             name="position"
             onChange={changeEventHandler}
+            className={'text-xs md:text-base'}
             placeholder="Number of openings"
           />
         </div>

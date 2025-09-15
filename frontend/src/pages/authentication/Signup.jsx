@@ -13,11 +13,13 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
+import { setLoading } from "@/redux/authSlice";
 
 const Signup = () => {
   const navigate = useNavigate();
   const {loading,user} = useSelector((store) => store.auth);
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
+ 
 
   const [input, setInput] = useState({
     fullName: "",
@@ -39,6 +41,8 @@ const Signup = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+     dispatch(setLoading(true));
+    
 
     const formData = new FormData();
     formData.append("fullName", input.fullName);
@@ -64,6 +68,8 @@ const Signup = () => {
       }
     } catch (error) {
       toast.error(error?.response?.data?.message || "Signup failed");
+    }finally{
+       dispatch(setLoading(false));
     }
   };
 useEffect(()=>{
@@ -74,10 +80,10 @@ useEffect(()=>{
   return (
     <section className="h-[80vh] w-full flex items-center justify-center">
       <form
-        className="bg-white text-gray-500 max-w-[460px] w-full mx-4 md:p-6 p-4 py-8 text-left text-sm rounded-lg shadow-[0px_0px_10px_0px] shadow-black/10"
+        className="bg-white text-gray-500 max-w-[460px] w-full mx-4 md:p-6 p-4 md:py-8 text-left text-sm rounded-lg shadow-[0px_0px_10px_0px] shadow-black/10"
         onSubmit={handleSubmit}
       >
-        <h2 className="text-2xl font-bold mb-9 text-center text-gray-800">
+        <h2 className="text-2xl font-bold md:mb-9 mb-4 text-center text-gray-800">
           Sign Up
         </h2>
 
@@ -158,7 +164,7 @@ useEffect(()=>{
         </div>
 
         {/* File input */}
-        <div className="flex items-center mt-2 mb-8 border bg-indigo-500/5 border-gray-500/10 rounded gap-3 pl-2">
+        <div className="flex items-center mt-2 mb-3 md:mb-8 border bg-indigo-500/5 border-gray-500/10 rounded gap-3 pl-2">
           <label
             htmlFor="profile"
             className="flex items-center justify-center gap-0.5"
@@ -169,7 +175,7 @@ useEffect(()=>{
           <input
             id="profile"
             name="profile"
-            className="w-full outline-none bg-transparent py-2.5"
+            className="w-full outline-none bg-transparent py-2. cursor-pointer"
             type="file"
             accept="image/*"
             onChange={fileHandler}
@@ -178,16 +184,16 @@ useEffect(()=>{
 
         {/* Submit Button */}
         {loading ? (
-          <Button className={"w-full"}>
+          <Button disabled className={"w-full cursor-not-allowed"}>
             <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Please Wait
           </Button>
         ) : (
-          <button
+          <Button
             type="submit"
-            className="w-full mb-3 bg-indigo-500 hover:bg-indigo-600 transition-all active:scale-95 py-2.5 rounded text-white font-medium"
+            className="w-full mb-3 transition-all active:scale-95 py-2.5 rounded text-white font-medium cursor-pointer"
           >
             Sign Up
-          </button>
+          </Button>
         )}
 
         {/* Redirect to Login */}
