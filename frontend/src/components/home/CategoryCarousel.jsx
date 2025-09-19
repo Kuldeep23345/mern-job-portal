@@ -27,7 +27,7 @@ const CategoryCarousel = () => {
     navigate("/browse");
   };
   return (
-    <section>
+    <section className=" hidden md:block">
       <Carousel className={"w-full md:max-w-xl max-w-3xs mx-auto  md:my-20 -my-6  "}>
         <CarouselContent>
           {category.map((cat, index) => (

@@ -122,7 +122,7 @@ useEffect(()=>{
         {loading ? (
           <Button className={"w-full "}>
             {" "}
-            <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Please Wait{" "}
+            <Loader2 className="mr-2 h-4 w-4 animate-spin cursor-not-allowed" /> Please Wait{" "}
           </Button>
         ) : (
           <Button

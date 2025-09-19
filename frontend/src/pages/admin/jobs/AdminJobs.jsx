@@ -27,7 +27,7 @@ const AdminJobs = () => {
           placeholder="Filter by name"
           onChange={(e) => setInput(e.target.value)}
         />
-        <Button onClick={() => navigate("/admin/jobs/create")} className={'text-xs md:text-base ml-3 md:ml-0'}>
+        <Button onClick={() => navigate("/admin/jobs/create")} className={'text-xs md:text-base ml-3 md:ml-0 cursor-pointer'}>
           {" "}
           New Jobs
         </Button>

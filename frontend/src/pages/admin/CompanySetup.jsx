@@ -75,23 +75,23 @@ const CompanySetup = () => {
   };
 
   
-// useGetCompanyById(params.id)
+
+
   useEffect(() => {
     setInput({
-      name: singleCompany?.name || "",
-      description: singleCompany?.description || "",
-      website: singleCompany?.website || "",
-      location: singleCompany?.location || "",
+      name: singleCompany?.company?.name || "",
+      description: singleCompany?.company?.description || "",
+      website: singleCompany?.company?.website || "",
+      location: singleCompany?.company?.location || "",
       file: null,
     });
   }, [singleCompany]);
 
   return (
     <section className="max-w-xl mx-auto my-10 px-10 md:px-0">
-      <form onSubmit={submitHandler}>
         <div className="flex items-center justify-between w-full gap-5 md:p-8 md:mb-0 mb-5">
           <Button
-            onClick={() => navigate("/admin/companies")}
+            onClick={() => navigate(-1)}
             variant="outline"
             className="flex items-center gap-2 text-gray-500 font-semibold"
           >
@@ -100,56 +100,61 @@ const CompanySetup = () => {
           </Button>
           <h1 className="font-bold text-sm md:text-xl">Company Setup</h1>
         </div>
+      <form onSubmit={submitHandler}>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-2 ">
           <div>
-            <Label>Company Name</Label>
+            <Label  className={'text-sm md:text-base'}>Company Name</Label>
             <Input
               type="text"
               name="name"
               value={input.name}
               onChange={inputHandler}
+              className={'text-sm md:text-base'}
             />
           </div>
           <div>
-            <Label>Description</Label>
+            <Label  className={'text-sm md:text-base'}>Description</Label>
             <Input
               type="text"
               name="description"
               value={input.description}
               onChange={inputHandler}
+             className={'text-sm md:text-base'}
             />
           </div>
           <div>
-            <Label>Website</Label>
+            <Label  className={'text-sm md:text-base'}>Website</Label>
             <Input
               type="text"
               name="website"
               value={input.website}
               onChange={inputHandler}
+             className={'text-sm md:text-base'}
             />
           </div>
           <div>
-            <Label>Location</Label>
+            <Label  className={'text-sm md:text-base'}>Location</Label>
             <Input
               type="text"
               name="location"
               value={input.location}
               onChange={inputHandler}
+              className={'text-sm md:text-base'}
             />
           </div>
           <div>
-            <Label>Logo</Label>
-            <Input type="file" accept="image/*" onChange={fileHandler} />
+            <Label className={'text-sm md:text-base'}>Logo</Label>
+            <Input  className={'text-sm md:text-base'} type="file" accept="image/*" onChange={fileHandler} />
           </div>
         </div>
 
         {loading ? (
           <Button className="w-full mt-3" disabled>
-            <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Please Wait
+            <Loader2 className="mr-2 h-4 w-4 animate-spin cursor-not-allowed" /> Please Wait
           </Button>
         ) : (
-          <Button type="submit" className="w-full mt-3 cursor-pointer py-5">
+          <Button type="submit" className="w-full mt-3 py-5 cursor-pointer">
             Save
           </Button>
         )}

@@ -71,10 +71,10 @@ setFilterCompany(filteredCompany)
                 </TableCell>
                 <TableCell className={'text-xs md:text-base'}>{company.name}</TableCell>
                 <TableCell className={'text-xs md:text-base'} >{company.createdAt.split("T")[0]}</TableCell>
-                <TableCell className="text-right cursor-pointer">
+                <TableCell className="text-right">
                   <Popover>
                     <PopoverTrigger>
-                      <MoreHorizontal className="size-4 md:size-7" />
+                      <MoreHorizontal className="size-4 md:size-7 cursor-pointer" />
                     </PopoverTrigger>
                     <PopoverContent className="md:w-32 w-24 ">
                       <div onClick={()=>navigate(`/admin/companies/${company._id}`)} className="flex items-center gap-2 w-fit cursor-pointer">

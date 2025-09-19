@@ -138,6 +138,9 @@ const Navbar = () => {
             </PopoverContent>
           </Popover>
         )}
+
+
+        {/* for moblie */}
         <Menu className=" md:hidden" onClick={hamBurgerHandler} />
         {hamBurger && (
           <div onClick={hamBurgerHandler} className="h-screen w-[70%] z-20 bg-white fixed left-0 top-0 bottom-0">

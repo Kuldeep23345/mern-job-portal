@@ -23,7 +23,7 @@ const Companies = () => {
           placeholder="Filter by name"
           onChange={(e) => setInput(e.target.value)}
         />
-        <Button onClick={() => navigate("/admin/companies/create")} className={"text-xs md:ml-0 ml-2  md:text-base"}>
+        <Button onClick={() => navigate("/admin/companies/create")} className={"text-xs md:ml-0 ml-2  md:text-base cursor-pointer"}>
           {" "}
           New Company
         </Button>

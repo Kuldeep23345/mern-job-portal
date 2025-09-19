@@ -8,8 +8,8 @@ const LatestJobs = () => {
 
   const { allJobs } = useSelector((store) => store.job);
   return (
-    <section className="max-w-7xl mx-auto my-10 px-10 md:px-0 ">
-      <h1 className="md:text-4xl text-base font-bold">
+    <section className="max-w-7xl mx-auto  px-10 md:px-0  -mt-6">
+      <h1 className="md:text-4xl text-sm font-semibold md:font-bold">
         <span className="text-[#6A38C2]"> Latest & Top</span>{" "}
         <span>Job Openings</span>
       </h1>
