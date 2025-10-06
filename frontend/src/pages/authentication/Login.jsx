@@ -127,7 +127,7 @@ useEffect(()=>{
         ) : (
           <Button
             type="submit"
-            className="w-full mb-3transition-all active:scale-95 py-2.5 rounded text-white font-medium"
+            className="w-full mb-3transition-all active:scale-95 py-2.5 rounded text-white font-medium cursor-pointer"
           >
             Login
           </Button>
