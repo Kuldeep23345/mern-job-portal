@@ -161,7 +161,7 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
               </Label>
               <Input
                 id="file"
-                className="col-span-3"
+                className="col-span-3 cursor-pointer"
                 name="file"
                 type="file"
                 accept="application/pdf"
@@ -171,12 +171,12 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
           </div>
           <DialogFooter>
             {loading ? (
-              <Button className="w-full" disabled>
+              <Button className="w-ful cursor-not-allowed" disabled>
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                 Please Wait
               </Button>
             ) : (
-              <Button type="submit" className="w-full mb-3">
+              <Button type="submit" className="w-full mb-3 cursor-pointer">
                 Update
               </Button>
             )}
