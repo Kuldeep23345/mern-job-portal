@@ -8,16 +8,16 @@ import { USER_API_ENDPOINT } from "@/utils/constant";
 import axios from "axios";
 import { toast } from "sonner";
 import { useDispatch, useSelector } from "react-redux";
-import { setLoading,setUser } from "@/redux/authSlice";
+import { setLoading, setUser } from "@/redux/authSlice";
 import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
 
 const Login = () => {
   const loading = useSelector((store) => store.auth?.loading || false);
-  const {user} = useSelector(store=>store.auth)
+  const { user } = useSelector((store) => store.auth);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  
+
   const [inputVal, setInputVal] = useState({
     email: "",
     password: "",
@@ -40,7 +40,6 @@ const Login = () => {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-   
 
     try {
       dispatch(setLoading(true));
@@ -51,23 +50,22 @@ const Login = () => {
         withCredentials: true,
       });
       if (res.data.success) {
-        dispatch(setUser(res.data.data))
-        
+        dispatch(setUser(res.data.data));
+
         navigate("/");
         toast.success(res.data.message);
       }
     } catch (error) {
       toast.error(error.response?.data?.message || "Login failed");
-     
     } finally {
       dispatch(setLoading(false));
     }
   };
-useEffect(()=>{
-  if(user){
-    navigate('/')
-  }
-},[])
+  useEffect(() => {
+    if (user) {
+      navigate("/");
+    }
+  }, []);
   return (
     <section className="h-[80vh] w-full flex items-center justify-center">
       <form
@@ -122,12 +120,13 @@ useEffect(()=>{
         {loading ? (
           <Button className={"w-full "}>
             {" "}
-            <Loader2 className="mr-2 h-4 w-4 animate-spin cursor-not-allowed" /> Please Wait{" "}
+            <Loader2 className="mr-2 h-4 w-4 animate-spin cursor-not-allowed" />{" "}
+            Please Wait{" "}
           </Button>
         ) : (
           <Button
             type="submit"
-            className="w-full mb-3transition-all active:scale-95 py-2.5 rounded text-white font-medium cursor-pointer"
+            className="w-full mb-3 transition-all active:scale-95 py-2.5 rounded text-white font-medium cursor-pointer"
           >
             Login
           </Button>

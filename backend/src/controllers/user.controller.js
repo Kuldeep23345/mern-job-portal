@@ -26,9 +26,9 @@ const userRegister = asyncHandler(async (req, res) => {
     password,
     phoneNumber,
     role,
-    profile:{
-      profilePhoto:cloudinaryUrl.secure_url
-    }
+    profile: {
+      profilePhoto: cloudinaryUrl.secure_url,
+    },
   });
   // user.profile = {
   //   ...user.profile,
@@ -98,7 +98,7 @@ const userUpdateProfile = asyncHandler(async (req, res) => {
   }
 
   let profilePath = null;
-  console.log(req.file)
+  console.log(req.file);
   if (req.file) {
     profilePath = req.file.path;
     const cloudinaryUrl = await uploadOnCloudinary(profilePath);
@@ -106,8 +106,8 @@ const userUpdateProfile = asyncHandler(async (req, res) => {
       throw new ApiError(500, "File upload failed");
     }
     user.profile.resume = cloudinaryUrl.secure_url;
-    user.profile.resumeOriginalName=req.file.originalname
-    console.log(req.file.originalName)
+    user.profile.resumeOriginalName = req.file.originalname;
+    console.log(req.file.originalname);
   }
   if (skills) {
     user.profile.skills = skills.split(",");

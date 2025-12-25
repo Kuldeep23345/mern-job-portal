@@ -9,4 +9,4 @@ connectDB()
       console.log(`SERVER IS RUNNING AT PORT::${process.env.PORT}`);
     })
   )
-  .catch((err) => console.error("MONGODB connection faild", err));
+  .catch((err) => console.error("MONGODB connection failed", err));

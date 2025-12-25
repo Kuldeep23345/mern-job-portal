@@ -17,9 +17,8 @@ import { setLoading } from "@/redux/authSlice";
 
 const Signup = () => {
   const navigate = useNavigate();
-  const {loading,user} = useSelector((store) => store.auth);
-  const dispatch = useDispatch()
- 
+  const { loading, user } = useSelector((store) => store.auth);
+  const dispatch = useDispatch();
 
   const [input, setInput] = useState({
     fullName: "",
@@ -41,8 +40,7 @@ const Signup = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-     dispatch(setLoading(true));
-    
+    dispatch(setLoading(true));
 
     const formData = new FormData();
     formData.append("fullName", input.fullName);
@@ -68,15 +66,15 @@ const Signup = () => {
       }
     } catch (error) {
       toast.error(error?.response?.data?.message || "Signup failed");
-    }finally{
-       dispatch(setLoading(false));
+    } finally {
+      dispatch(setLoading(false));
     }
   };
-useEffect(()=>{
-  if(user){
-    navigate('/')
-  }
-},[])
+  useEffect(() => {
+    if (user) {
+      navigate("/");
+    }
+  }, []);
   return (
     <section className="h-[80vh] w-full flex items-center justify-center">
       <form
@@ -175,7 +173,7 @@ useEffect(()=>{
           <input
             id="profile"
             name="profile"
-            className="w-full outline-none bg-transparent py-2. cursor-pointer"
+            className="w-full outline-none bg-transparent py-2 cursor-pointer"
             type="file"
             accept="image/*"
             onChange={fileHandler}
@@ -185,7 +183,8 @@ useEffect(()=>{
         {/* Submit Button */}
         {loading ? (
           <Button disabled className={"w-full cursor-not-allowed"}>
-            <Loader2 className="mr-2 h-4 w-4 animate-spin cursor-not-allowed" /> Please Wait
+            <Loader2 className="mr-2 h-4 w-4 animate-spin cursor-not-allowed" />{" "}
+            Please Wait
           </Button>
         ) : (
           <Button
