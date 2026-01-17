@@ -1,12 +1,54 @@
-# React + Vite
+# Job Portal - Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is the frontend client for the MERN Job Portal application. It provides the user interface for candidates and recruiters to interact with the platform.
 
-Currently, two official plugins are available:
+## 🛠️ Built With
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **React.js (v19)**: Component-based UI library.
+- **Vite**: Next-generation frontend tooling.
+- **Tailwind CSS (v4)**: Utility-first CSS framework.
+- **Radix UI**: Unstyled, accessible components (Primitives for Shadcn UI).
+- **Redux Toolkit**: Efficient state management.
+- **Redux Persist**: Persist state across reloads.
+- **Framer Motion**: Production-ready animation library.
+- **Axios**: Promise based HTTP client.
+- **Lucide React & React Icons**: Icon libraries.
+- **Sonner**: Toasts and notifications.
 
-## Expanding the ESLint configuration
+## 🚀 Getting Started
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### Prerequisites
+
+- Node.js installed on your machine.
+- The backend server running locally (see root README).
+
+### Installation
+
+1. Navigate to the frontend directory:
+
+   ```bash
+   cd frontend
+   ```
+
+2. Install dependencies:
+
+   ```bash
+   npm install
+   ```
+
+3. Run the development server:
+
+   ```bash
+   npm run dev
+   ```
+
+4. Open your browser and visit: `http://localhost:5173`
+
+## 📁 Project Structure
+
+- `src/components`: Reusable UI components.
+- `src/pages`: Main application pages (Home, Jobs, Login, etc.).
+- `src/redux`: Redux slices and store configuration.
+- `src/lib/utils`: Helper functions (cn, etc.).
+
+For full project documentation, including backend setup and features, please refer to the [Root README](../README.md).
