@@ -16,7 +16,7 @@ const userRegister = asyncHandler(async (req, res) => {
   if (existedUser) {
     throw new ApiError(
       400,
-      "User already existed with this email and password"
+      "User already existed with this email and password",
     );
   }
 
@@ -65,6 +65,7 @@ const userLogin = asyncHandler(async (req, res) => {
 
   const options = {
     httpOnly: true,
+    sameSite: "None",
     secure: true,
   };
   const token = await user.generateAccessToken();
@@ -78,6 +79,7 @@ const userLogin = asyncHandler(async (req, res) => {
 const userLogout = asyncHandler(async (_, res) => {
   const options = {
     httpOnly: true,
+    sameSite: "None",
     secure: true,
   };
 
