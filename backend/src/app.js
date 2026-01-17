@@ -9,18 +9,18 @@ app.use(express.json({ limit: "16kb" }));
 app.use(express.urlencoded({ extended: true, limit: "16kb" }));
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: process.env.FRONTEND_URL,
     credentials: true,
-  })
+  }),
 );
-app.use(express.static("public"))
+app.use(express.static("public"));
 app.use(cookieParser());
 
 // Routes
 import userRoutes from "./routes/user.route.js";
 import companyRoutes from "./routes/company.route.js";
-import JobRoutes from "./routes/job.route.js"
-import applicationRoutes from "./routes/application.route.js"
+import JobRoutes from "./routes/job.route.js";
+import applicationRoutes from "./routes/application.route.js";
 app.use("/api/v1/users", userRoutes);
 app.use("/api/v1/company", companyRoutes);
 app.use("/api/v1/job", JobRoutes);
